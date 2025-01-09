@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../domain/entities/asset.dart';
+
 import '../../../../core/constants/constants.dart';
+import '../../domain/entities/asset.dart';
 
 class StockListPage extends StatelessWidget {
   const StockListPage({super.key});
@@ -111,10 +112,11 @@ class StockListPage extends StatelessWidget {
                         children: [
                           Text(
                             Strings.assetList,
-                            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primaryColor,
-                            ),
+                            style: Theme.of(context).textTheme.headlineSmall
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primaryColor,
+                                ),
                           ),
                           const SizedBox(height: 4),
                           Text(
@@ -165,9 +167,13 @@ class StockListPage extends StatelessWidget {
                       child: InkWell(
                         borderRadius: BorderRadius.circular(16),
                         onTap: () {
+                          // 기존 SnackBar 제거 후 새로운 것 표시
+                          ScaffoldMessenger.of(context).clearSnackBars();
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text('${asset.securityName} ${Strings.stockDetailInfo}'),
+                              content: Text(
+                                '${asset.securityName} ${Strings.stockDetailInfo}',
+                              ),
                               duration: const Duration(seconds: 2),
                               behavior: SnackBarBehavior.floating,
                               shape: RoundedRectangleBorder(
@@ -189,7 +195,9 @@ class StockListPage extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(12),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: _getColorByType(asset.type).withValues(alpha: 0.3),
+                                      color: _getColorByType(
+                                        asset.type,
+                                      ).withValues(alpha: 0.3),
                                       blurRadius: 8,
                                       offset: const Offset(0, 2),
                                     ),
@@ -227,10 +235,16 @@ class StockListPage extends StatelessWidget {
                                             vertical: 2,
                                           ),
                                           decoration: BoxDecoration(
-                                            color: _getColorByType(asset.type).withValues(alpha: 0.1),
-                                            borderRadius: BorderRadius.circular(8),
+                                            color: _getColorByType(
+                                              asset.type,
+                                            ).withValues(alpha: 0.1),
+                                            borderRadius: BorderRadius.circular(
+                                              8,
+                                            ),
                                             border: Border.all(
-                                              color: _getColorByType(asset.type).withValues(alpha: 0.3),
+                                              color: _getColorByType(
+                                                asset.type,
+                                              ).withValues(alpha: 0.3),
                                             ),
                                           ),
                                           child: Text(
@@ -238,7 +252,9 @@ class StockListPage extends StatelessWidget {
                                             style: TextStyle(
                                               fontSize: 11,
                                               fontWeight: FontWeight.w600,
-                                              color: _getColorByType(asset.type),
+                                              color: _getColorByType(
+                                                asset.type,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -275,7 +291,9 @@ class StockListPage extends StatelessWidget {
                                       vertical: 6,
                                     ),
                                     decoration: BoxDecoration(
-                                      color: AppColors.primaryColor.withValues(alpha: 0.1),
+                                      color: AppColors.primaryColor.withValues(
+                                        alpha: 0.1,
+                                      ),
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     child: Text(
