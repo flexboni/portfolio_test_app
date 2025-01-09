@@ -45,6 +45,9 @@ dependencies:
   # Local storage for auto-login
   shared_preferences: ^2.2.3
   
+  # Crypto for password hashing
+  crypto: ^3.0.3
+  
   # Form validation (simple validation without external packages)
   # flutter_form_builder: ^9.4.1
   # form_builder_validators: ^9.1.0
