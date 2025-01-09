@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../../core/constants/constants.dart';
 import '../providers/auth_notifier.dart';
 import '../states/auth_state.dart';
@@ -32,16 +33,16 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     if (value == null || value.isEmpty) {
       return Strings.errorUserIdEmpty;
     }
-    
+
     // 영문 7자 이상
     if (value.length < 7) {
       return Strings.errorUserIdTooShort;
     }
-    
+
     if (!RegExp(r'^[a-zA-Z]+$').hasMatch(value)) {
       return Strings.errorUserIdEnglishOnly;
     }
-    
+
     return null;
   }
 
@@ -49,32 +50,32 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     if (value == null || value.isEmpty) {
       return Strings.errorPasswordEmpty;
     }
-    
+
     // 총 10자 이상
     if (value.length < 10) {
       return Strings.errorPasswordTooShortSignup;
     }
-    
+
     // 영문 대문자 포함
     if (!RegExp(r'[A-Z]').hasMatch(value)) {
       return Strings.errorPasswordNoUppercase;
     }
-    
+
     // 영문 소문자 포함
     if (!RegExp(r'[a-z]').hasMatch(value)) {
       return Strings.errorPasswordNoLowercase;
     }
-    
+
     // 숫자 포함
     if (!RegExp(r'[0-9]').hasMatch(value)) {
       return Strings.errorPasswordNoNumber;
     }
-    
+
     // 특수문자 포함
     if (!RegExp(r'[!@#$%^&*(),.?\":{}|<>]').hasMatch(value)) {
       return Strings.errorPasswordNoSpecial;
     }
-    
+
     return null;
   }
 
@@ -82,12 +83,12 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     if (value == null || value.isEmpty) {
       return Strings.errorPhoneEmpty;
     }
-    
+
     // 한국 핸드폰 번호 형식 (010-0000-0000 또는 01000000000)
     if (!RegExp(r'^010-?[0-9]{4}-?[0-9]{4}$').hasMatch(value)) {
       return Strings.errorPhoneInvalid;
     }
-    
+
     return null;
   }
 
@@ -95,12 +96,14 @@ class _SignupPageState extends ConsumerState<SignupPage> {
     if (value == null || value.isEmpty) {
       return Strings.errorEmailEmpty;
     }
-    
+
     // 이메일 형식
-    if (!RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$').hasMatch(value)) {
+    if (!RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    ).hasMatch(value)) {
       return Strings.errorInvalidEmail;
     }
-    
+
     return null;
   }
 
@@ -140,10 +143,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: AppColors.primaryColor,
-          ),
+          icon: Icon(Icons.arrow_back, color: AppColors.primaryColor),
           onPressed: () => context.go('/login'),
         ),
       ),
@@ -183,17 +183,17 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                         children: [
                           Text(
                             Strings.signup,
-                            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primaryColor,
-                            ),
+                            style: Theme.of(context).textTheme.headlineMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primaryColor,
+                                ),
                           ),
                           const SizedBox(height: 8),
                           Text(
                             '새로운 계정을 만들어 포트폴리오를 시작하세요',
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Colors.grey[600],
-                            ),
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(color: Colors.grey[600]),
                             textAlign: TextAlign.center,
                           ),
                         ],
@@ -243,12 +243,14 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                           loading: () => null,
                           orElse: () => () async {
                             if (_formKey.currentState!.validate()) {
-                              await ref.read(authNotifierProvider.notifier).signup(
-                                userId: _idController.text,
-                                password: _passwordController.text,
-                                email: _emailController.text,
-                                phone: _phoneController.text,
-                              );
+                              await ref
+                                  .read(authNotifierProvider.notifier)
+                                  .signup(
+                                    userId: _idController.text,
+                                    password: _passwordController.text,
+                                    email: _emailController.text,
+                                    phone: _phoneController.text,
+                                  );
                             }
                           },
                         ),
@@ -336,39 +338,24 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       decoration: InputDecoration(
         labelText: labelText,
         helperText: helperText,
-        helperStyle: TextStyle(
-          fontSize: 12,
-          color: Colors.grey[600],
-        ),
+        helperStyle: TextStyle(fontSize: 12, color: Colors.grey[600]),
         prefixIcon: Icon(prefixIcon),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: Colors.grey[300]!,
-          ),
+          borderSide: BorderSide(color: Colors.grey[300]!),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: AppColors.primaryColor,
-            width: 2,
-          ),
+          borderSide: BorderSide(color: AppColors.primaryColor, width: 2),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(
-            color: AppColors.errorColor,
-          ),
+          borderSide: const BorderSide(color: AppColors.errorColor),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(
-            color: AppColors.errorColor,
-            width: 2,
-          ),
+          borderSide: const BorderSide(color: AppColors.errorColor, width: 2),
         ),
         filled: true,
         fillColor: Colors.grey[50],

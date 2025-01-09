@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/auth/data/datasources/auth_local_datasource.dart';
+import '../../features/auth/data/datasources/auth_remote_datasource.dart';
 import '../../features/auth/data/repositories/auth_repository_impl.dart';
 import '../../features/auth/domain/repositories/auth_repository.dart';
 import '../../features/auth/domain/usecases/login_usecase.dart';
@@ -30,12 +31,19 @@ Future<AuthLocalDataSource> authLocalDataSource(Ref ref) async {
   return AuthLocalDataSourceImpl(sharedPreferences: sharedPrefs);
 }
 
+@riverpod
+AuthRemoteDataSource authRemoteDataSource(Ref ref) {
+  return AuthRemoteDataSourceImpl();
+}
+
 // Repository providers
 @riverpod
 Future<AuthRepository> authRepository(Ref ref) async {
   final localDataSource = await ref.watch(authLocalDataSourceProvider.future);
+  final remoteDataSource = ref.watch(authRemoteDataSourceProvider);
   return AuthRepositoryImpl(
     localDataSource: localDataSource,
+    remoteDataSource: remoteDataSource,
   );
 }
 

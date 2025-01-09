@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../domain/entities/user.dart';
+
 import '../../../../core/error/failures.dart';
+import '../../domain/entities/user.dart';
 
 part 'auth_state.freezed.dart';
 

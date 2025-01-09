@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../../core/constants/constants.dart';
 import '../../../../features/auth/presentation/providers/auth_notifier.dart';
 import '../providers/portfolio_notifier.dart';
@@ -112,16 +113,15 @@ class MainPage extends ConsumerWidget {
                   const SizedBox(height: 8),
                   Text(
                     failure.toString(),
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 14,
-                    ),
+                    style: TextStyle(color: Colors.grey[600], fontSize: 14),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton.icon(
                     onPressed: () {
-                      ref.read(portfolioNotifierProvider.notifier).refreshAssets();
+                      ref
+                          .read(portfolioNotifierProvider.notifier)
+                          .refreshAssets();
                     },
                     icon: const Icon(Icons.refresh),
                     label: const Text('다시 시도'),
@@ -164,18 +164,16 @@ class MainPage extends ConsumerWidget {
                     children: [
                       Text(
                         Strings.assetAllocation,
-                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primaryColor,
-                        ),
+                        style: Theme.of(context).textTheme.headlineMedium
+                            ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primaryColor,
+                            ),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         '현재 포트폴리오 구성 비율',
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 14,
-                        ),
+                        style: TextStyle(color: Colors.grey[600], fontSize: 14),
                       ),
                       const SizedBox(height: 32),
                       SizedBox(
@@ -228,25 +226,27 @@ class MainPage extends ConsumerWidget {
                       const SizedBox(height: 16),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
+                          horizontal: 14,
                           vertical: 12,
                         ),
                         decoration: BoxDecoration(
                           color: AppColors.primaryColor.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: AppColors.primaryColor.withValues(alpha: 0.2),
+                            color: AppColors.primaryColor.withValues(
+                              alpha: 0.2,
+                            ),
                           ),
                         ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
+                        child: Wrap(
+                          alignment: WrapAlignment.center,
                           children: [
                             Icon(
                               Icons.touch_app,
                               size: 16,
                               color: AppColors.primaryColor,
                             ),
-                            const SizedBox(width: 8),
+                            const SizedBox(width: 2),
                             Text(
                               Strings.chartTooltip,
                               style: TextStyle(
@@ -278,7 +278,9 @@ class MainPage extends ConsumerWidget {
                           Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: AppColors.primaryColor.withValues(alpha: 0.1),
+                              color: AppColors.primaryColor.withValues(
+                                alpha: 0.1,
+                              ),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Icon(
@@ -290,10 +292,11 @@ class MainPage extends ConsumerWidget {
                           const SizedBox(width: 12),
                           Text(
                             Strings.legend,
-                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primaryColor,
-                            ),
+                            style: Theme.of(context).textTheme.titleLarge
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primaryColor,
+                                ),
                           ),
                         ],
                       ),
@@ -320,9 +323,7 @@ class MainPage extends ConsumerWidget {
       decoration: BoxDecoration(
         color: Colors.grey[50],
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.grey[200]!,
-        ),
+        border: Border.all(color: Colors.grey[200]!),
       ),
       child: Row(
         children: [
@@ -344,17 +345,10 @@ class MainPage extends ConsumerWidget {
           const SizedBox(width: 12),
           Text(
             label,
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 15,
-            ),
+            style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
           ),
           const Spacer(),
-          Icon(
-            Icons.circle,
-            color: color,
-            size: 8,
-          ),
+          Icon(Icons.circle, color: color, size: 8),
         ],
       ),
     );
