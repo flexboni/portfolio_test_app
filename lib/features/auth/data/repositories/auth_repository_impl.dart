@@ -1,14 +1,20 @@
 import 'package:dartz/dartz.dart';
 import '../../../../core/error/failures.dart';
+import '../../../../core/constants/strings.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_local_datasource.dart';
+import '../datasources/auth_remote_datasource.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthLocalDataSource localDataSource;
+  final AuthRemoteDataSource remoteDataSource;
 
-  AuthRepositoryImpl({required this.localDataSource});
+  AuthRepositoryImpl({
+    required this.localDataSource,
+    required this.remoteDataSource,
+  });
 
   @override
   Future<Either<Failure, User>> login({
@@ -16,28 +22,44 @@ class AuthRepositoryImpl implements AuthRepository {
     required String password,
   }) async {
     try {
-      // Mock login logic - in real app, this would call an API
+      // Basic validation
       if (userId.isEmpty || password.isEmpty) {
-        return const Left(Failure.validation('User ID and password are required'));
+        return const Left(Failure.validation(Strings.errorAllFieldsRequired));
       }
 
-      // Simulate login validation
       if (userId.length < 7) {
-        return const Left(Failure.validation('User ID must be at least 7 characters'));
+        return const Left(Failure.validation(Strings.errorUserIdMinLength));
       }
 
       if (password.length < 6) {
-        return const Left(Failure.validation('Password must be at least 6 characters'));
+        return const Left(Failure.validation(Strings.errorPasswordMinLength6));
       }
 
-      // Mock successful login
+      // Check credentials against local storage
+      final isValidCredentials = await localDataSource.validateCredentials(
+        userId: userId,
+        password: password,
+      );
+
+      if (!isValidCredentials) {
+        return const Left(Failure.validation(Strings.errorInvalidCredentials));
+      }
+
+      // Get user data from local storage
+      final userData = await localDataSource.getUserData(userId);
+      if (userData == null) {
+        return const Left(Failure.cache(Strings.errorUserNotFound));
+      }
+
+      // Set logged in state
       await localDataSource.setLoggedIn(userId);
       
+      // Create user entity from stored data
       final user = User(
-        id: userId,
-        email: '$userId@example.com',
-        phoneNumber: '010-0000-0000',
-        createdAt: DateTime.now(),
+        id: userData['userId'] as String,
+        email: userData['email'] as String,
+        phoneNumber: userData['phone'] as String,
+        createdAt: DateTime.parse(userData['createdAt'] as String),
       );
 
       return Right(user);
@@ -58,28 +80,45 @@ class AuthRepositoryImpl implements AuthRepository {
     required String phone,
   }) async {
     try {
-      // Mock signup validation
+      // Validation
       if (userId.isEmpty || password.isEmpty || email.isEmpty || phone.isEmpty) {
-        return const Left(Failure.validation('All fields are required'));
+        return const Left(Failure.validation(Strings.errorAllFieldsRequired));
       }
 
       if (userId.length < 7) {
-        return const Left(Failure.validation('User ID must be at least 7 characters'));
+        return const Left(Failure.validation(Strings.errorUserIdMinLength));
       }
 
       if (password.length < 10) {
-        return const Left(Failure.validation('Password must be at least 10 characters'));
+        return const Left(Failure.validation(Strings.errorPasswordMinLength10));
       }
 
       if (!RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$').hasMatch(email)) {
-        return const Left(Failure.validation('Invalid email format'));
+        return const Left(Failure.validation(Strings.errorInvalidEmailFormat));
       }
 
       if (!RegExp(r'^010-?[0-9]{4}-?[0-9]{4}$').hasMatch(phone)) {
-        return const Left(Failure.validation('Invalid phone format'));
+        return const Left(Failure.validation(Strings.errorInvalidPhoneFormat));
       }
 
-      // Mock successful signup
+      // Check if user already exists
+      final existingUserData = await localDataSource.getUserData(userId);
+      if (existingUserData != null) {
+        return const Left(Failure.validation(Strings.errorUserAlreadyExists));
+      }
+
+      // Save user credentials to local storage
+      await localDataSource.saveUserCredentials(
+        userId: userId,
+        password: password,
+        email: email,
+        phone: phone,
+      );
+
+      // In a real app, you would also call the remote API
+      // final userModel = await remoteDataSource.signup(...);
+
+      // Set logged in state
       await localDataSource.setLoggedIn(userId);
       
       final user = User(

@@ -70,6 +70,26 @@ class Strings {
   static const successSignup = '회원가입이 완료되었습니다!';
   static const successLogout = '로그아웃되었습니다.';
 
+  /// Repository Error Messages
+  static const errorAllFieldsRequired = 'All fields are required';
+  static const errorUserIdMinLength = 'User ID must be at least 7 characters';
+  static const errorPasswordMinLength6 = 'Password must be at least 6 characters';
+  static const errorPasswordMinLength10 = 'Password must be at least 10 characters';
+  static const errorInvalidEmailFormat = 'Invalid email format';
+  static const errorInvalidPhoneFormat = 'Invalid phone format';
+  static const errorInvalidCredentials = 'Invalid user ID or password';
+  static const errorUserNotFound = 'User data not found';
+  static const errorUserAlreadyExists = 'User ID already exists';
+
+  /// Cache Error Messages
+  static const errorSaveCredentials = 'Failed to save user credentials';
+  static const errorValidateCredentials = 'Failed to validate credentials';
+  static const errorGetUserData = 'Failed to get user data';
+  static const errorSaveLoginState = 'Failed to save login state';
+  static const errorClearLoginState = 'Failed to clear login state';
+  static const errorCheckLoginState = 'Failed to check login state';
+  static const errorGetCurrentUserId = 'Failed to get current user ID';
+
   /// Stock Page
   static const stockList = '전체 주식';
   static const stockDetails = '주식 상세';
