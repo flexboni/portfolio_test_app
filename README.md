@@ -95,8 +95,8 @@ lib/
 ## 🚀 시작하기
 
 ### 필요 조건
-- Flutter 3.0+
-- Dart 3.0+
+- Flutter 3.35.5+
+- Dart 3.9.2+
 - Android Studio / VS Code
 - iOS 개발용: Xcode (macOS)
 
@@ -237,27 +237,6 @@ test: 테스트 추가/수정
 chore: 빌드 프로세스, 도구 설정
 ```
 
-## 🎯 향후 개발 계획
-
-### Phase 1 - 기본 기능 완성 ✅
-- [x] Clean Architecture 구조 설계
-- [x] 사용자 인증 시스템
-- [x] 로컬 데이터 저장
-- [x] 포트폴리오 UI
-
-### Phase 2 - API 연동 🔄
-- [ ] Backend API 서버 구축
-- [ ] HTTP 통신 (Dio) 연동
-- [ ] JWT 토큰 관리
-- [ ] 실시간 주가 데이터 연동
-
-### Phase 3 - 고도화 🚀
-- [ ] 푸시 알림
-- [ ] 다크 테마
-- [ ] 다국어 지원 (i18n)
-- [ ] 오프라인 지원
-- [ ] 백업/복원 기능
-
 ## 📄 라이선스
 
 MIT License - 자세한 내용은 [LICENSE](LICENSE) 파일을 참고하세요.
@@ -265,16 +244,3 @@ MIT License - 자세한 내용은 [LICENSE](LICENSE) 파일을 참고하세요.
 ## 👨‍💻 개발자
 
 **flexboni** - [GitHub](https://github.com/flexboni)
-
-## 🤝 기여하기
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'feat: Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-> 💡 **Clean Architecture**와 **Riverpod**를 학습하고 실습하기 위한 프로젝트입니다.  
-> 실제 투자 결정에 사용하지 마세요.
