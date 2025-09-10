@@ -23,7 +23,8 @@ void main() {
       expect(find.text(Strings.userId), findsOneWidget);
       expect(find.text(Strings.password), findsOneWidget);
       expect(find.widgetWithText(ElevatedButton, Strings.login), findsOneWidget);
-      expect(find.widgetWithText(TextButton, Strings.signup), findsOneWidget);
+      expect(find.text('계정이 없으신가요?'), findsOneWidget);
+      expect(find.text('회원가입'), findsOneWidget);
     });
 
     testWidgets('should validate empty fields', (WidgetTester tester) async {
